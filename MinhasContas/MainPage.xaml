@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converterPack="clr-namespace:Xamarin.Forms.ConvertersPack;assembly=Xamarin.Forms.ConvertersPack"
+             x:Class="MinhasContas.MainPage"
+             Title="Minhas Contas">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converterPack:CurrencyConverter x:Key="CurrencyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <AbsoluteLayout>
+        <ScrollView 
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
+
+            <StackLayout Orientation="Vertical">
+                <ListView x:Name="lvConta"
+                      Margin="10"
+                      ItemSelected="OnItemSelected"
+                      HasUnevenRows = "true">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout Orientation="Vertical"
+                                             VerticalOptions="Center"
+                                             Margin="9">
+                                        <Label Text="{Binding Nome}" 
+                                           VerticalOptions="Start" 
+                                           FontSize="Medium"
+                                           FontAttributes="Bold"/>
+
+                                        <Label Text="{Binding DataVencimento, StringFormat='{0:dd/MM/yyyy}'}"
+                                           VerticalOptions="Start"
+                                           FontSize="Small"/>
+                                    </StackLayout>
+
+                                    <Label Text="{Binding Valor, Converter={StaticResource CurrencyConverter}}"
+                                       HorizontalOptions="EndAndExpand"
+                                       VerticalOptions="Center"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       TextColor="#FF0000"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+        
+        <ImageButton
+            AbsoluteLayout.LayoutBounds="0.95,0.95,60,60"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            BackgroundColor="#2196F3"
+            Source="add.png"
+            CornerRadius="30"
+            HeightRequest="0"
+            WidthRequest="0" 
+            Clicked="OnClicked"/>
+        
+    </AbsoluteLayout>
+</ContentPage>

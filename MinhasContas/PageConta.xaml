@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converterPack="clr-namespace:Xamarin.Forms.ConvertersPack;assembly=Xamarin.Forms.ConvertersPack"
+             x:Class="MinhasContas.PageConta"
+             Title="Dados da Conta">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converterPack:CurrencyConverter x:Key="CurrencyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    
+    <ContentPage.Content>
+        
+        <StackLayout Padding="10, 20, 10, 10" Orientation="Vertical">
+            <Label Text="Nome" FontSize="Small"/>
+            <Entry Text="{Binding Nome}"
+                   MaxLength="23"
+                   ClearButtonVisibility="WhileEditing"/>
+
+            <Label Text="Valor" FontSize="Small"/>
+            <Entry Text="{Binding Valor, Converter={StaticResource CurrencyConverter}}"
+                   ClearButtonVisibility="WhileEditing"
+                   Keyboard="Numeric"/>
+
+            <Label Text="Data de Vencimento" FontSize="Small"/>
+            <DatePicker x:Name="dtPickerDtVencimento"
+                        Date="{Binding DataVencimento}">
+                <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+            </DatePicker>
+
+            <StackLayout Margin="10" Orientation="Horizontal">
+                <Label Text="Paga" FontSize="Medium" HorizontalOptions="Center"/>
+                <CheckBox x:Name="chboxPaga"
+                          HorizontalOptions="Center"
+                          IsChecked="{Binding Paga}"/>
+            </StackLayout>
+            
+
+        </StackLayout>
+    </ContentPage.Content>
+
+    
+    
+</ContentPage>

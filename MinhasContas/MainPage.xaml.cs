@@ -23,10 +23,10 @@ namespace MinhasContas
         {
             base.OnAppearing();
             List<Conta> listanaopagas = await App.Database.GetContasNaoPagas();
-            listanaopagas.OrderBy(c => DateTime.ParseExact(c.DataVencimento, "dd/MM/yyyy", CultureInfo.InvariantCulture));
+            listanaopagas.OrderBy(c => (c.DataVencimento, "dd/MM/yyyy", CultureInfo.InvariantCulture));
 
             List<Conta> listapagas = await App.Database.GetContasPagas();
-            listapagas.OrderByDescending(c => DateTime.ParseExact(c.DataVencimento, "dd/MM/yyyy", CultureInfo.InvariantCulture));
+            listapagas.OrderByDescending(c => (c.DataVencimento, "dd/MM/yyyy", CultureInfo.InvariantCulture));
 
             List<Conta> listacontas = new List<Conta>();
             listacontas.AddRange(listanaopagas);

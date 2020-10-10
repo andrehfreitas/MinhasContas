@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace MinhasContas
 {
     public partial class MainPage : ContentPage
     {
+        private ObservableCollection<Pagas> ListaAgrupada { get; set; }
         public MainPage()
         {
             InitializeComponent();
@@ -22,17 +24,30 @@ namespace MinhasContas
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            ListaAgrupada = new ObservableCollection<Pagas>();
+
+            // Lista de Contas não pagas
+            var contasNaoPagas = new Pagas() { LongName = "NÃO PAGAS" };
             List<Conta> listanaopagas = await App.Database.GetContasNaoPagas();
-            listanaopagas.OrderBy(c => (c.DataVencimento, "dd/MM/yyyy", CultureInfo.InvariantCulture));
+            listanaopagas.OrderBy(c => c.DataVencimento);
+            foreach(Conta conta in listanaopagas)
+            {
+                contasNaoPagas.Add(conta);
+            }
+            ListaAgrupada.Add(contasNaoPagas);
 
+
+            // Lista de Contas pagas
+            var contasPagas = new Pagas() { LongName = "PAGAS" };
             List<Conta> listapagas = await App.Database.GetContasPagas();
-            listapagas.OrderByDescending(c => (c.DataVencimento, "dd/MM/yyyy", CultureInfo.InvariantCulture));
+            listapagas.OrderByDescending(c => (c.DataVencimento));
+            foreach(Conta conta in listapagas)
+            {
+                contasPagas.Add(conta);
+            }
+            ListaAgrupada.Add(contasPagas);
 
-            List<Conta> listacontas = new List<Conta>();
-            listacontas.AddRange(listanaopagas);
-            listacontas.AddRange(listapagas);
-
-            lvConta.ItemsSource = listacontas;
+            lvConta.ItemsSource = ListaAgrupada;
         }
 
 

@@ -18,9 +18,11 @@
 
             <StackLayout Orientation="Vertical">
                 <ListView x:Name="lvConta"
-                      Margin="10"
-                      ItemSelected="OnItemSelected"
-                      HasUnevenRows = "true">
+                          Margin="10"
+                          ItemSelected="OnItemSelected"
+                          HasUnevenRows = "true"
+                          IsGroupingEnabled="True"
+                          GroupDisplayBinding="{Binding LongName}">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -44,11 +46,22 @@
                                        VerticalOptions="Center"
                                        FontSize="15"
                                        FontAttributes="Bold"
-                                       TextColor="#FF0000"/>
+                                       TextColor="DarkRed"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
+
+                    <!-- Formatação do nome do grupo-->
+                    <ListView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding LongName}"
+                                      TextColor="DarkBlue"/>
+                        </DataTemplate>
+                    </ListView.GroupHeaderTemplate>
+                    <!-- Fim da formatação do nome do grupo -->
+                        
+                    
                 </ListView>
             </StackLayout>
         </ScrollView>

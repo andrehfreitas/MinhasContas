@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Plugin.Clipboard;
 
 namespace MinhasContas
 {
@@ -20,6 +21,8 @@ namespace MinhasContas
 
 
         // Método trata quais elementos da interface aparecerão na tela quando a mesma é exibida
+        // Se for novo cadastro aparece apenas o botão salvar, se for atualização também aparece
+        // a lixeira para exclusão do registro
         protected override void OnAppearing()
         {
             ToolbarItem itemSalvar = new ToolbarItem();
@@ -43,7 +46,7 @@ namespace MinhasContas
         }
 
 
-        // Método que salva um registro de conta
+        // Método que salva o cadastro ou a atualização de uma conta
         private void OnSaveConta(object sender, EventArgs args)
         {
             Conta c = BindingContext as Conta;
@@ -58,6 +61,13 @@ namespace MinhasContas
             Conta c = BindingContext as Conta;
             App.Database.DeleteConta(c);
             Navigation.PopAsync();
+        }
+
+        
+        // Método que copia o código de barras para a área de transferência
+        private void CopiaCodigoBarras(object sender, EventArgs e)
+        {
+            CrossClipboard.Current.SetText(entryCodigoBarras.Text);
         }
     }
 }

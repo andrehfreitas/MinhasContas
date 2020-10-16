@@ -17,6 +17,8 @@ namespace MinhasContas
         public String Nome { get; set; }
         public Double Valor { get; set; }
         public DateTime DataVencimento { get; set; }
+        public String CodigoBarras { get; set; }
+        public String InfoComplementar { get; set; }
         public Boolean Paga { get; set; }
         
     }

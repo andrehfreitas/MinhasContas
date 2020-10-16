@@ -13,33 +13,48 @@
 
     
     <ContentPage.Content>
-        
-        <StackLayout Padding="10, 20, 10, 10" Orientation="Vertical">
-            <Label Text="Nome" FontSize="Small"/>
-            <Entry Text="{Binding Nome}"
-                   MaxLength="23"
-                   ClearButtonVisibility="WhileEditing"/>
+        <ScrollView VerticalOptions="FillAndExpand">
+            <StackLayout Padding="10, 20, 10, 10" Orientation="Vertical">
+                <Label Text="Nome" FontSize="Small"/>
+                <Entry Text="{Binding Nome}"
+                       MaxLength="23"
+                       ClearButtonVisibility="WhileEditing"/>
 
-            <Label Text="Valor" FontSize="Small"/>
-            <Entry Text="{Binding Valor, Converter={StaticResource CurrencyConverter}}"
-                   ClearButtonVisibility="WhileEditing"
-                   Keyboard="Numeric"/>
+                <Label Text="Valor" FontSize="Small"/>
+                <Entry Text="{Binding Valor, Converter={StaticResource CurrencyConverter}}"
+                       ClearButtonVisibility="WhileEditing"
+                       Keyboard="Numeric"/>
 
-            <Label Text="Data de Vencimento" FontSize="Small"/>
-            <DatePicker x:Name="dtPickerDtVencimento"
-                        Date="{Binding DataVencimento}">
-                <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
-            </DatePicker>
+                <Label Text="Data de Vencimento" FontSize="Small"/>
+                <DatePicker x:Name="dtPickerDtVencimento"
+                            Date="{Binding DataVencimento}">
+                    <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+                </DatePicker>
 
-            <StackLayout Margin="10" Orientation="Horizontal">
-                <Label Text="Paga" FontSize="Medium" HorizontalOptions="Center"/>
-                <CheckBox x:Name="chboxPaga"
-                          HorizontalOptions="Center"
-                          IsChecked="{Binding Paga}"/>
+                <Label Text="Código de Barras" FontSize="Small"/>
+                <Entry x:Name="entryCodigoBarras"
+                       Text="{Binding CodigoBarras}"
+                       ClearButtonVisibility="WhileEditing"
+                       Keyboard="Numeric"
+                       MaxLength="47"
+                       Placeholder="Digite apenas números, sem espaços"/>
+
+                <Button Text="Copiar código de barras"
+                        Clicked="CopiaCodigoBarras"/>
+
+                <StackLayout Margin="10" Orientation="Horizontal">
+                    <Label Text="Pagamento Efetivado" FontSize="Medium" HorizontalOptions="Center"/>
+                    <CheckBox x:Name="chboxPaga"
+                              HorizontalOptions="Center"
+                              IsChecked="{Binding Paga}"/>
+                </StackLayout>
+
+                <Label Text="Informações Complementares" FontSize="Small"/>
+                <Editor Text="{Binding InfoComplementar}"
+                        AutoSize="TextChanges"/>
+
             </StackLayout>
-            
-
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 
     

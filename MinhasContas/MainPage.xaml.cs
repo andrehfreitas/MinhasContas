@@ -20,33 +20,39 @@ namespace MinhasContas
 
 
         // Reescrita do método OnAppearing
-        // Sempre que esta tela aparecer o BD faz a busca dos registros e atualiza a listview
+        // Sempre que esta tela aparecer o BD faz a busca dos registros, remonta as listas 
+        // e atualiza a listview
         protected override async void OnAppearing()
         {
             base.OnAppearing();
             ListaAgrupada = new ObservableCollection<Pagas>();
 
-            // Lista de Contas não pagas
+            // Montagem da lista de Contas não pagas
             var contasNaoPagas = new Pagas() { LongName = "NÃO PAGAS" };
             List<Conta> listanaopagas = await App.Database.GetContasNaoPagas();
-            listanaopagas.OrderBy(c => c.DataVencimento);
-            foreach(Conta conta in listanaopagas)
+            listanaopagas.Sort((a, b) => a.DataVencimento.CompareTo(b.DataVencimento)); // Ordenação ascendente
+            foreach (Conta conta in listanaopagas)
             {
                 contasNaoPagas.Add(conta);
             }
+
             ListaAgrupada.Add(contasNaoPagas);
 
 
-            // Lista de Contas pagas
+            // Montagem da lista de Contas pagas
             var contasPagas = new Pagas() { LongName = "PAGAS" };
             List<Conta> listapagas = await App.Database.GetContasPagas();
-            listapagas.OrderByDescending(c => (c.DataVencimento));
-            foreach(Conta conta in listapagas)
+            listapagas.Sort((a, b) => b.DataVencimento.CompareTo(a.DataVencimento)); // Ordenação descendente
+
+            foreach (Conta conta in listapagas)
             {
                 contasPagas.Add(conta);
             }
+
             ListaAgrupada.Add(contasPagas);
 
+
+            // Alimentando a listview com a Lista agrupada e categorizada
             lvConta.ItemsSource = ListaAgrupada;
         }
 

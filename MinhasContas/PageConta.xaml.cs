@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Plugin.Clipboard;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Plugin.Clipboard;
 
 namespace MinhasContas
 {
@@ -20,9 +14,11 @@ namespace MinhasContas
         }
 
 
-        // Método trata quais elementos da interface aparecerão na tela quando a mesma é exibida
-        // Se for novo cadastro aparece apenas o botão salvar, se for atualização também aparece
-        // a lixeira para exclusão do registro
+        /* 
+         * Método trata quais elementos da interface aparecerão na tela quando a mesma é exibida
+         * Se for novo cadastro aparece apenas o botão salvar, se for atualização também aparece
+         * a lixeira para exclusão do registro
+        */
         protected override void OnAppearing()
         {
             ToolbarItem itemSalvar = new ToolbarItem();
@@ -49,9 +45,15 @@ namespace MinhasContas
         // Método que salva o cadastro ou a atualização de uma conta
         private void OnSaveConta(object sender, EventArgs args)
         {
-            Conta c = BindingContext as Conta;
-            App.Database.SaveConta(c);
-            Navigation.PopAsync();
+            if (string.IsNullOrEmpty(entryNome.Text) || string.IsNullOrEmpty(entryValor.Text))
+            {
+                DisplayAlert("Atenção", "Nome e valor são dados obrigatórios", "OK");
+            } else
+            {
+                Conta c = BindingContext as Conta;
+                App.Database.SaveConta(c);
+                Navigation.PopAsync();
+            }
         }
 
 
@@ -68,6 +70,7 @@ namespace MinhasContas
         private void CopiaCodigoBarras(object sender, EventArgs e)
         {
             CrossClipboard.Current.SetText(entryCodigoBarras.Text);
+            DependencyService.Get<IMessage>().LongAlert("Código de barras copiado");
         }
     }
 }

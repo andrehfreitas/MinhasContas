@@ -23,12 +23,14 @@ namespace MinhasContas
         }
 
 
+        // Método que retorna as contas não pagas
         public Task<List<Conta>> GetContasNaoPagas()
         {
             return database.Table<Conta>().Where(i => i.Paga == false).ToListAsync();
         }
 
 
+        // Método que retorna as contas pagas
         public Task<List<Conta>> GetContasPagas()
         {
             return database.Table<Conta>().Where(i => i.Paga == true).ToListAsync();
@@ -47,7 +49,7 @@ namespace MinhasContas
         {
             if(conta.Id == 0)
             {
-                database.InsertAsync(conta);
+                return database.InsertAsync(conta);
             }
 
             return database.UpdateAsync(conta);

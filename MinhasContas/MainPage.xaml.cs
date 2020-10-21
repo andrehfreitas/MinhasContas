@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -22,10 +18,18 @@ namespace MinhasContas
         // Reescrita do método OnAppearing
         // Sempre que esta tela aparecer o BD faz a busca dos registros, remonta as listas 
         // e atualiza a listview
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
+            CarregarLista();
+        }
+
+
+        // Faz a montagem da lista a ser carregada no listview
+        private async void CarregarLista()
+        {
             ListaAgrupada = new ObservableCollection<Pagas>();
+
 
             // Montagem da lista de Contas não pagas
             var contasNaoPagas = new Pagas() { LongName = "NÃO PAGAS" };
@@ -53,6 +57,7 @@ namespace MinhasContas
 
 
             // Alimentando a listview com a Lista agrupada e categorizada
+            lvConta.ItemsSource = null;
             lvConta.ItemsSource = ListaAgrupada;
         }
 

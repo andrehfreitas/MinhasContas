@@ -16,12 +16,14 @@
         <ScrollView VerticalOptions="FillAndExpand">
             <StackLayout Padding="10, 20, 10, 10" Orientation="Vertical">
                 <Label Text="Nome" FontSize="Small"/>
-                <Entry Text="{Binding Nome}"
+                <Entry x:Name="entryNome"
+                       Text="{Binding Nome}"
                        MaxLength="23"
                        ClearButtonVisibility="WhileEditing"/>
 
                 <Label Text="Valor" FontSize="Small"/>
-                <Entry Text="{Binding Valor, Converter={StaticResource CurrencyConverter}}"
+                <Entry x:Name="entryValor"
+                       Text="{Binding Valor, Converter={StaticResource CurrencyConverter}}"
                        ClearButtonVisibility="WhileEditing"
                        Keyboard="Numeric"/>
 

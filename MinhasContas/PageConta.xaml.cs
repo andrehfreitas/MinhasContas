@@ -1,5 +1,6 @@
 ﻿using Plugin.Clipboard;
 using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,7 +19,7 @@ namespace MinhasContas
          * Método trata quais elementos da interface aparecerão na tela quando a mesma é exibida
          * Se for novo cadastro aparece apenas o botão salvar, se for atualização também aparece
          * a lixeira para exclusão do registro
-        */
+         */
         protected override void OnAppearing()
         {
             ToolbarItem itemSalvar = new ToolbarItem();

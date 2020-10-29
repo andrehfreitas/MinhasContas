@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MinhasContas
@@ -17,8 +18,9 @@ namespace MinhasContas
         // Reescrita do método OnAppearing
         // Sempre que esta tela aparecer o BD faz a busca dos registros, remonta as listas 
         // e atualiza a listview
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
+            await Task.Delay(800);
             base.OnAppearing();
             CarregarLista();
         }

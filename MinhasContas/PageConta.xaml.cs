@@ -1,6 +1,6 @@
 ﻿using Plugin.Clipboard;
 using System;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -39,6 +39,9 @@ namespace MinhasContas
             if (conta.Id != 0)
             {
                 this.ToolbarItems.Add(itemDeletar);
+            } else
+            {
+                entryValor.Text = "";
             }
         }
 
@@ -52,6 +55,7 @@ namespace MinhasContas
             } else
             {
                 Conta c = BindingContext as Conta;
+                lblInfComp.Focus();
                 App.Database.SaveConta(c);
                 Navigation.PopAsync();
             }
@@ -73,5 +77,37 @@ namespace MinhasContas
             CrossClipboard.Current.SetText(entryCodigoBarras.Text);
             DependencyService.Get<IMessage>().LongAlert("Código de barras copiado");
         }
+
+
+        // Máscara para o campo Valor
+        private void Mascara(object sender, EventArgs e)
+        {
+            var ev = e as TextChangedEventArgs;
+            if (ev.NewTextValue != ev.OldTextValue)
+            {
+                var entry = (Entry)sender;
+                entry.TextChanged -= Mascara;
+                string text = Regex.Replace(ev.NewTextValue.Trim(), @"[^0-9]", "");
+
+                if (text.Length > 2)
+                {
+                    text = text.Insert(text.Length - 2, ",");
+                }
+
+                if (text.Length > 6)
+                {
+                    text = text.Insert(text.Length - 6, ".");
+                }
+                if (text.Length > 10)
+                {
+                    text = text.Insert(text.Length - 10, ".");
+                }
+
+                if (entry.Text != text)
+                    entry.Text = text;
+                entry.TextChanged += Mascara;
+            }
+        }
+
     }
 }

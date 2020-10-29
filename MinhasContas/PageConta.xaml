@@ -21,11 +21,13 @@
                        MaxLength="23"
                        ClearButtonVisibility="WhileEditing"/>
 
-                <Label Text="Valor" FontSize="Small"/>
+
+                <Label Text="Valor (R$)" FontSize="Small"/>
                 <Entry x:Name="entryValor"
                        Text="{Binding Valor, Converter={StaticResource CurrencyConverter}}"
                        ClearButtonVisibility="WhileEditing"
-                       Keyboard="Numeric"/>
+                       Keyboard="Numeric"
+                       TextChanged="Mascara"/>
 
                 <Label Text="Data de Vencimento" FontSize="Small"/>
                 <DatePicker x:Name="dtPickerDtVencimento"
@@ -51,7 +53,7 @@
                               IsChecked="{Binding Paga}"/>
                 </StackLayout>
 
-                <Label Text="Informações Complementares" FontSize="Small"/>
+                <Label Text="Informações Complementares" FontSize="Small" x:Name="lblInfComp"/>
                 <Editor Text="{Binding InfoComplementar}"
                         AutoSize="TextChanges"/>
 
